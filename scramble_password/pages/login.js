@@ -22,7 +22,8 @@ export default function Login() {
                         type="email"
                         id="emailAddress"
                         value={email}
-                        aria-describedby="email-helper-text">
+                        aria-describedby="email-helper-text"
+                    >
                     </Input>
                 </FormControl>
 
@@ -33,7 +34,8 @@ export default function Login() {
                         type="password"
                         id="pass"
                         value={pass}
-                        aria-describedby="password-helper-text">
+                        aria-describedby="password-helper-text"
+                    >
                     </Input>
                 </FormControl>
 
