@@ -1,8 +1,7 @@
-import { Box } from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-export function SortableItem(props) {
+export function SortableItem(props, image) {
     const {
         attributes,
         listeners,
@@ -19,9 +18,7 @@ export function SortableItem(props) {
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
             {/* Any code can go here and it will draggable and droppable  */}
-            <Box bg="blue" color="white">
-                {props.id}
-            </Box>
+            <img src={props.id} />
         </div>
     )
 

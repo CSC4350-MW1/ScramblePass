@@ -1,5 +1,4 @@
 const admin = require("firebase-admin");
-const { getStorage } = require('firebase-admin/storage');
 const serviceAccount = require("./secrets.json");
 
 export const verifyIdToken = (token) => {
@@ -15,5 +14,3 @@ export const verifyIdToken = (token) => {
         throw error;
     })
 };
-// 
-export const bucket = getStorage().bucket();
