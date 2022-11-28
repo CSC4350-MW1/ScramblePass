@@ -2,7 +2,7 @@ import { useState } from "react";
 import firebaseClient from "../firebaseClient";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { Box, Flex, Input, FormControl, FormLabel, FormHelperText, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
+import { Box, Flex, Input, FormControl, FormLabel, Link, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arraySwap, SortableContext, rectSwappingStrategy } from "@dnd-kit/sortable";
@@ -23,6 +23,13 @@ export default function Signup() {
 
     return (
         <Flex>
+            {/* Home button */}
+            <Link href="/" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                <Button variant={"solid"} colorScheme="green">
+                    Home
+                </Button>
+            </Link>
+
             <Box w={500} p={4} my={12} mx="auto">
                 <Heading as={"h2"} textAlign="center">
                     Signup
@@ -38,20 +45,7 @@ export default function Signup() {
                     </Input>
                 </FormControl>
 
-                {/* <HStack justify="center" spacing={10}>
-                    <Image height={100} width={200} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2Fpanthers.png?alt=media&token=cbb379c6-b85c-48af-b25b-6a937178b600"
-                        onClick={() => {
-                            setimageSelected(selectableImage[0].id)
-                            console.log(imageSelected);
-                        }} />
-                    <Image height={100} width={200} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2Fpanthers.png?alt=media&token=cbb379c6-b85c-48af-b25b-6a937178b600"
-                        onClick={() => {
-                            setimageSelected(!imageSelected)
-                            console.log(imageSelected);
-                        }} />
-                </HStack> */}
-
-                <Container centerContent bg="grey" my={2}>
+                <Container centerContent w={262} bg="grey" my={2}>
                     <DndContext
                         collisionDetection={closestCenter}
                         onDragEnd={handleDragEnd}

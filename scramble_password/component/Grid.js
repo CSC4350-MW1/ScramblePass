@@ -4,8 +4,8 @@ export function Grid({ children, columns }) {
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridGap: 10,
-        padding: 10,
+        gridGap: 5,
+        padding: 5,
       }}
     >
       {children}

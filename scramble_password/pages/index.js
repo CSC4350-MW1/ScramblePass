@@ -1,9 +1,7 @@
-import Link from "next/link";
+// import Link from "next/link";
 import { useAuth } from "./../auth";
 import Container from "../component/Container";
-import { Flex, Box, Button, Text, Heading, Stack } from "@chakra-ui/react";
-// import firebase from "firebase/compat/app";
-// import "firebase/compat/auth";
+import { Flex, Box, Button, Text, Heading, Stack, Link, LinkBox } from "@chakra-ui/react";
 
 export default function Home() {
   const { user } = useAuth();
@@ -20,28 +18,26 @@ export default function Home() {
           </Text>
           <Stack mt={8} alignItems="center" justifyContent={"center"} isInline width={"100%"}>
 
-            {/* Going to areas of website locked via authentication */}
-            <Button variant={"solid"} colorScheme="blue" width={"100%"} isDisabled={!user}>
-              <Link href="authenticated" style={{ color: 'inherit', textDecoration: 'inherit' }}>
-                Go to Authenticated Route
-              </Link>
-            </Button>
+            <Link href="/signup" width={"100%"} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+              <Button variant={"solid"} colorScheme="green" width={"100%"} isDisabled={user}>
+                Sign Up
+              </Button>
+            </Link>
 
-            {/* Sign Out of session on main page */}
-            {/* If you want to enable then uncomment the firebase imports */}
-
-            {/* <Button width={"100%"} variant="solid" colorScheme={"red"}
-              onClick={async () => {
-                await firebase.auth().signOut();
-                // window.location.href = "/";
-              }}>Sign Out</Button> */}
-
-            <Button variant={"solid"} colorScheme="green" width={"100%"} isDisabled={user}>
-              <Link href="/login" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+            <Link href="/login" width={"100%"} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+              <Button variant={"solid"} colorScheme="green" width={"100%"} isDisabled={user}>
                 Login
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Stack>
+
+          {/* Going to areas of website locked via authentication */}
+          <Link href="/authenticated" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+            <Button my={2} variant={"solid"} colorScheme="blue" width={"100%"} isDisabled={!user}>
+              Go to Authenticated Route
+            </Button>
+          </Link>
+
         </Box>
       </Flex>
     </Container>

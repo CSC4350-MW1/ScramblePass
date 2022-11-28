@@ -2,7 +2,7 @@ import nookies from 'nookies';
 import { verifyIdToken } from "../firebaseAdmin";
 import firebaseClient from "../firebaseClient";
 import firebase from "firebase/compat/app";
-import { Box, Flex, Text, Heading, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Heading, Button, Link } from '@chakra-ui/react';
 
 // Any page that requires a user to be logged in
 
@@ -11,6 +11,13 @@ function Authenticated({ session }) {
     if (session) {
         return (
             <Flex>
+                {/* Home button */}
+                <Link href="/" style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Button variant={"solid"} colorScheme="green">
+                        Home
+                    </Button>
+                </Link>
+
                 <Box w={500} p={4} my={12} mx="auto">
                     <Heading as={"h2"} mb={12} textAlign="center">
                         Authenticated
