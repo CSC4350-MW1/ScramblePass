@@ -64,7 +64,7 @@ export default function Login() {
                 <Stack justify={"center"} mt={6} isInline spacing={10}>
 
                     <Button minWidth={"40%"} variant="solid"
-                        colorScheme={"blue"} isDisabled={email === "" || pass === ""}
+                        colorScheme={"blue"} isDisabled={email === "" || pass === "" || initialImages === "" || pass === initialImages}
                         onClick={async () => {
                             await firebase.auth().signInWithEmailAndPassword(email, pass).then(function () {
                                 window.location.href = "/"
@@ -96,7 +96,8 @@ export default function Login() {
             setImages((items) => {
                 // Sets the useState of initialImages to the string of the original image order
                 if (initialImages === "") {
-                    setInitialImages(String(items).match(/password[0-9]/g));
+                    const initImageWComma = String(items).match(/password[0-9]/g)
+                    setInitialImages(String(initImageWComma).replaceAll(',', ''));
                 }
                 const activeIndex = items.indexOf(active.id);
                 const overIndex = items.indexOf(over.id);
