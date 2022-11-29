@@ -99,7 +99,8 @@ export default function Signup() {
             setImages((items) => {
                 // Sets the useState of initialImages to the string of the original image order
                 if (initialImages === "") {
-                    setInitialImages(String(items).match(/password[0-9]/g));
+                    const initImageWComma = String(items).match(/password[0-9]/g)
+                    setInitialImages(String(initImageWComma).replaceAll(',', ''));
                 }
                 const activeIndex = items.indexOf(active.id);
                 const overIndex = items.indexOf(over.id);
