@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Link from "next/link";
+import debounce from 'lodash.debounce';
 import { Grid } from "../component/Grid"
 import { SortableItem } from "../component/sortableItem";
-import passwordImagesJson from '../component/passwordImages.json';
 import { auth, firestore } from '../firebaseClient';
 
 import { Box, Flex, Input, FormControl, FormLabel, FormHelperText, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arraySwap, SortableContext, rectSwappingStrategy } from "@dnd-kit/sortable";
+
+import passwordImagesJson from '../component/passwordImages.json';
+import passwordImagesJson2 from '../component/passwordImages2.json';
 
 export default function Login() {
     const toast = useToast();
@@ -17,6 +20,35 @@ export default function Login() {
 
     const [images, setImages] = useState(passwordImagesJson);
     const [initialImages, setInitialImages] = useState("");
+
+    useEffect(() => {
+        checkEmail(email);
+    }, [email]);
+
+    const checkEmail = useCallback(
+        debounce(async (email) => {
+            var tempEmail
+            { email === "" ? tempEmail = " " : tempEmail = `${email}` }
+            var emailRef = firestore.collection(`email`).doc(String(tempEmail));
+
+            emailRef.get().then((doc) => {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    console.log(doc.get("imageSelected"))
+
+                    // setimageSelected(doc.get("imageSelected"));
+
+                    { doc.get("imageSelected") === "GSU" ? setImages(passwordImagesJson) : setImages(passwordImagesJson2) }
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+        }, 500),
+        []
+    );
     return (
         <Flex>
             {/* Home button */}
@@ -32,7 +64,9 @@ export default function Login() {
                 </Heading>
                 <FormControl isRequired>
                     <FormLabel htmlFor="email">Email Address</FormLabel>
-                    <Input onChange={(e) => setEmail(e.target.value)}
+                    <Input onChange={(e) => {
+                        setEmail(e.target.value)
+                    }}
                         type="email"
                         id="emailAddress"
                         value={email}
@@ -109,4 +143,5 @@ export default function Login() {
             });
         }
     }
+
 }
