@@ -1,4 +1,5 @@
 import { useAuth } from "./../auth";
+import { auth } from "../firebaseClient";
 import Container from "../component/Container";
 import { Flex, Box, Button, Text, Heading, Stack, Link } from "@chakra-ui/react";
 
@@ -36,6 +37,13 @@ export default function Home() {
               Go to Authenticated Route
             </Button>
           </Link>
+
+          {/* Sign Out button */}
+          <Button width={"100%"} variant="solid" colorScheme="red" isDisabled={!user}
+            onClick={async () => {
+              await auth.signOut();
+              window.location.href = "/";
+            }}>Sign Out</Button>
 
         </Box>
       </Flex>
