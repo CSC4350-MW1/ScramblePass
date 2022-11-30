@@ -1,13 +1,11 @@
 import nookies from 'nookies';
 import { verifyIdToken } from "../firebaseAdmin";
-import firebaseClient from "../firebaseClient";
-import firebase from "firebase/compat/app";
+import { auth } from "../firebaseClient";
 import { Box, Flex, Text, Heading, Button, Link } from '@chakra-ui/react';
 
 // Any page that requires a user to be logged in
 
 function Authenticated({ session }) {
-    firebaseClient();
     if (session) {
         return (
             <Flex>
@@ -31,7 +29,7 @@ function Authenticated({ session }) {
                     <Box my={12} mx="auto" width="500px">
                         <Button width="100%" variant="solid" colorScheme="red"
                             onClick={async () => {
-                                await firebase.auth().signOut();
+                                await auth.signOut();
                                 window.location.href = "/";
                             }}>Sign Out</Button>
                     </Box>

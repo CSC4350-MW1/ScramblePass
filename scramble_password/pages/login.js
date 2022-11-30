@@ -1,19 +1,16 @@
 import { useState } from "react";
-import firebaseClient from "../firebaseClient";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import Link from "next/link";
+import { Grid } from "../component/Grid"
+import { SortableItem } from "../component/sortableItem";
+import passwordImagesJson from '../component/passwordImages.json';
+import { auth, firestore } from '../firebaseClient';
+
 import { Box, Flex, Input, FormControl, FormLabel, FormHelperText, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arraySwap, SortableContext, rectSwappingStrategy } from "@dnd-kit/sortable";
-import { SortableItem } from "../component/sortableItem";
-import { Grid } from "../component/Grid"
-
-import passwordImagesJson from '../component/passwordImages.json';
-import Link from "next/link";
 
 export default function Login() {
-    firebaseClient();
     const toast = useToast();
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
@@ -66,7 +63,7 @@ export default function Login() {
                     <Button minWidth={"40%"} variant="solid"
                         colorScheme={"blue"} isDisabled={email === "" || pass === "" || initialImages === "" || pass === initialImages}
                         onClick={async () => {
-                            await firebase.auth().signInWithEmailAndPassword(email, pass).then(function () {
+                            await auth.signInWithEmailAndPassword(email, pass).then(function () {
                                 window.location.href = "/"
                             }).catch(function (error) {
                                 const message = error.message;

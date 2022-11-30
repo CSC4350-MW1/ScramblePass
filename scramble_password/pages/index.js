@@ -1,4 +1,3 @@
-// import Link from "next/link";
 import { useAuth } from "./../auth";
 import Container from "../component/Container";
 import { Flex, Box, Button, Text, Heading, Stack, Link, LinkBox } from "@chakra-ui/react";

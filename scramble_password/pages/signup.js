@@ -1,7 +1,6 @@
 import { useState } from "react";
-import firebaseClient from "../firebaseClient";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { useAuth } from "./../auth";
+import { auth, firestore } from '../firebaseClient';
 import { Box, Flex, Input, FormControl, FormLabel, Link, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -10,16 +9,19 @@ import { SortableItem } from "../component/sortableItem";
 import { Grid } from "../component/Grid"
 
 import passwordImagesJson from '../component/passwordImages.json';
+import passwordImagesJson2 from '../component/passwordImages2.json';
 
 export default function Signup() {
-    firebaseClient();
+    var { user } = useAuth();
+
     const toast = useToast();
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
     const [images, setImages] = useState(passwordImagesJson);
     const [initialImages, setInitialImages] = useState("");
-    // const [imageSelected, setimageSelected] = useState(false);
+    const [imageSelected, setimageSelected] = useState("GSU");
+    const [imageComment, setimageComment] = useState("Got school spirit, eh?")
 
     return (
         <Flex>
@@ -45,6 +47,29 @@ export default function Signup() {
                     </Input>
                 </FormControl>
 
+                <center>
+                    <h2>Select an Image</h2>
+                </center>
+                <Container centerContent w={500} my={2}>
+                    <Grid columns={2}>
+                        <img id="PantherSquare" onClick={() => {
+                            setImages(passwordImagesJson);
+                            setimageSelected("Panther");
+                            setimageComment("Got school spirit, eh?");
+                            console.log("Image selected. Loading Images now.");
+                        }} height={"250"} width={"250"} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2FpanthersSquare.png?alt=media&token=2245ca32-1b9f-46e9-8715-380b78717103"></img>
+
+                        <img id="LakeSquare" onClick={() => {
+                            setImages(passwordImagesJson2);
+                            setimageSelected("Lake");
+                            setimageComment("I live scenic photos too!");
+                            console.log("Image selected. Loading Images now.");
+                        }} height={"250"} width={"250"} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2FLakeSquare.jpeg?alt=media&token=9865cb3a-c2e7-4f89-b969-cba971dd6916"></img>
+                    </Grid>
+                </Container>
+
+                <center><text>{imageSelected} <br /> {imageComment}</text></center>
+
                 <Container centerContent w={262} bg="grey" my={2}>
                     <DndContext
                         collisionDetection={closestCenter}
@@ -55,6 +80,7 @@ export default function Signup() {
                                 items={images}
                                 strategy={rectSwappingStrategy}
                             >
+
                                 {images.map((image, index) => <SortableItem key={image} id={image} index={index} />)}
                             </SortableContext>
                         </Grid>
@@ -68,18 +94,31 @@ export default function Signup() {
                         // string and seeing if the currect password is the same as the initial image order
                         colorScheme={"blue"} isDisabled={email === "" || pass === "" || initialImages === "" || pass === initialImages}
                         onClick={async () => {
-                            await firebase.auth().createUserWithEmailAndPassword(email, pass).then(function () {
-                                window.location.href = "/"
-                            }).catch(function (error) {
-                                const message = error.message;
-                                toast({
-                                    title: "An error occurred",
-                                    description: message,
-                                    status: "error",
-                                    duration: 9000,
-                                    isClosable: true,
+                            await auth.createUserWithEmailAndPassword(email, pass)
+                                .then(async () => {
+                                    // Make sure that the user is the newly created user
+                                    user = auth.currentUser;
+
+                                    // Reference the users document
+                                    const userDoc = firestore.doc(`users/${user.uid}`);
+
+                                    // Commit doc via a batch write
+                                    const batch = firestore.batch();
+                                    batch.set(userDoc, { imageSelected: imageSelected });
+
+                                    await batch.commit();
+                                }).then(function () {
+                                    window.location.href = "/"
+                                }).catch(function (error) {
+                                    const message = error.message;
+                                    toast({
+                                        title: "An error occurred",
+                                        description: message,
+                                        status: "error",
+                                        duration: 9000,
+                                        isClosable: true,
+                                    })
                                 })
-                            })
                         }}>
                         Create Account
                     </Button>
