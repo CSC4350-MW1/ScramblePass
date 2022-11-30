@@ -5,7 +5,7 @@ import { Grid } from "../component/Grid"
 import { SortableItem } from "../component/sortableItem";
 import { auth, firestore } from '../firebaseClient';
 
-import { Box, Flex, Input, FormControl, FormLabel, FormHelperText, Stack, Button, Heading, useToast, Container, Image, HStack } from '@chakra-ui/react';
+import { Box, Flex, Input, FormControl, FormLabel, Stack, Button, Heading, useToast, Container } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arraySwap, SortableContext, rectSwappingStrategy } from "@dnd-kit/sortable";

@@ -1,6 +1,6 @@
 import { useAuth } from "./../auth";
 import Container from "../component/Container";
-import { Flex, Box, Button, Text, Heading, Stack, Link, LinkBox } from "@chakra-ui/react";
+import { Flex, Box, Button, Text, Heading, Stack, Link } from "@chakra-ui/react";
 
 export default function Home() {
   const { user } = useAuth();
