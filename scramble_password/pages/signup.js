@@ -4,7 +4,7 @@ import { auth, firestore } from '../firebaseClient';
 import { Box, Flex, Input, FormControl, FormLabel, Link, Stack, Button, Heading, useToast, Container } from '@chakra-ui/react';
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { arraySwap, SortableContext, rectSwappingStrategy } from "@dnd-kit/sortable";
+import { arraySwap, arrayMove, SortableContext, rectSwappingStrategy, rectSortingStrategy } from "@dnd-kit/sortable";
 import { SortableItem } from "../component/sortableItem";
 import { Grid } from "../component/Grid"
 
@@ -78,7 +78,11 @@ export default function Signup() {
                         <Grid columns={3}>
                             <SortableContext
                                 items={images}
+                                // Swaps tiles
                                 strategy={rectSwappingStrategy}
+
+                            // Shifts tiles
+                            // strategy={rectSortingStrategy}
                             >
 
                                 {images.map((image, index) => <SortableItem key={image} id={image} index={index} />)}
@@ -147,12 +151,19 @@ export default function Signup() {
                 const overIndex = items.indexOf(over.id);
 
                 // Sets the image order equal to filename (password[0-9]) in the order the images are currenlty in
+
                 const imageOrder = String(arraySwap(items, activeIndex, overIndex)).replace(',', '').match(/password[0-9]/g);
+                // const imageOrder = String(arrayMove(items, activeIndex, overIndex)).replace(',', '').match(/password[0-9]/g);
                 console.log(String(imageOrder).replaceAll(',', ''));
 
                 // Set the password to the image order
                 setPass(String(imageOrder).replaceAll(',', ''));
+
+                // Swaps tiles
                 return arraySwap(items, activeIndex, overIndex);
+
+                // Shifts tiles
+                // return arrayMove(items, activeIndex, overIndex);
             });
         }
     }
