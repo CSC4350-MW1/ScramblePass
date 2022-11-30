@@ -62,7 +62,7 @@ export default function Signup() {
                         <img id="LakeSquare" onClick={() => {
                             setImages(passwordImagesJson2);
                             setimageSelected("Lake");
-                            setimageComment("I love scenic photos too!");
+                            setimageComment("I like scenic photos too!");
                             console.log("Image selected. Loading Images now.");
                         }} height={"250"} width={"250"} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2FLakeSquare.jpeg?alt=media&token=9865cb3a-c2e7-4f89-b969-cba971dd6916"></img>
                     </Grid>
