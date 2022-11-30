@@ -54,7 +54,7 @@ export default function Signup() {
                     <Grid columns={2}>
                         <img id="PantherSquare" onClick={() => {
                             setImages(passwordImagesJson);
-                            setimageSelected("Panther");
+                            setimageSelected("GSU");
                             setimageComment("Got school spirit, eh?");
                             console.log("Image selected. Loading Images now.");
                         }} height={"250"} width={"250"} src="https://firebasestorage.googleapis.com/v0/b/scrambler-pass.appspot.com/o/images%2FpanthersSquare.png?alt=media&token=2245ca32-1b9f-46e9-8715-380b78717103"></img>
