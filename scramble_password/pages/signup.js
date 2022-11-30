@@ -99,12 +99,14 @@ export default function Signup() {
                                     // Make sure that the user is the newly created user
                                     user = auth.currentUser;
 
-                                    // Reference the users document
+                                    // Reference the users and email document
                                     const userDoc = firestore.doc(`users/${user.uid}`);
+                                    const emailDoc = firestore.doc(`email/${email}`);
 
-                                    // Commit doc via a batch write
+                                    // Commit user and email doc via a batch write
                                     const batch = firestore.batch();
                                     batch.set(userDoc, { imageSelected: imageSelected });
+                                    batch.set(emailDoc, { uid: user.uid });
 
                                     await batch.commit();
                                 }).then(function () {
